@@ -1,17 +1,26 @@
-const Pool = require('pg').Pool
+const { knexSnakeCaseMappers } = require('objection');
+const pg = require('knex')({
+  client: 'pg',
+  connection: {
+    host: 'localhost',
+    port: '5432',
+    database: 'smalltalks',
+    password: 'smalltalk',
+  },
+  ...knexSnakeCaseMappers()
+})
 
-const cn = new Pool({
-  user: 'smalltalker',
-  host: 'localhost',
-  database: 'smalltalks',
-  password: 'smalltalk',
-  port: '5432'
-});
 
 const getChatters = async (req, res) => {
-  res.status(200).json(chatters);
+  const chatters = pg.select('*').from("chatters").then(
+    chatters => res.status(200).json(chatters)
+  );
 }
 const createChatter = async(req, res) => {
+  const chatter = req.body;
+  pg.insert(chatter).into('chatters').then(
+    db => res.status(200)
+  );
 }
 const getChatterById = async(req, res) => {
 }

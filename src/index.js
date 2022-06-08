@@ -15,8 +15,8 @@ app.use(morgan('combined'));
 
 // defining endpoints
 app.get('/chatters/', api.getChatters);
-app.get('chatters/:id', api.getChatterById);
-app.post('chatters/', api.createChatter);
+app.get('/chatters/:id', api.getChatterById);
+app.post('/chatters/', api.createChatter);
 
 // starting the server
 app.listen(3001, () => {

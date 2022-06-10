@@ -9,7 +9,7 @@ const con = !isProd ? {
 const pg = require('knex')({
   client: 'pg',
   connection: con,
-  ssl: isProd,
+  ssl: {rejectUnauthorized: false},
   ...knexSnakeCaseMappers()
 })
 

@@ -32,7 +32,7 @@ const createChatter = async(req, res) => {
       }
       res.cookie("accountMade", "true", options);
       res.status(200);
-      res.send();
+      res.send("account made");
     }
   );
 }

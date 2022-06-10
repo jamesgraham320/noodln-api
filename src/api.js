@@ -5,11 +5,13 @@ const con = !isProd ? {
     port: '5432',
     database: 'smalltalks',
     password: 'smalltalk',
-} : process.env.DATABASE_URL;
+} : {
+  connectionString: process.env.DATABASE_URL,
+  ssl: {rejectUnauthorized: false}
+} 
 const pg = require('knex')({
   client: 'pg',
   connection: con,
-  ssl: {rejectUnauthorized: false},
   ...knexSnakeCaseMappers()
 })
 

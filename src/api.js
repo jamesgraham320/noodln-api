@@ -24,7 +24,16 @@ const getChatters = async (req, res) => {
 const createChatter = async(req, res) => {
   const chatter = req.body;
   pg.insert(chatter).into('chatters').then(
-    db => res.status(200)
+    db => {
+      const options = {
+        maxAge: 1000 * 60 * 60 * 24 * 5, //expires after 5 days
+        path: "/",
+        withCredentials: true,
+      }
+      res.cookie("accountMade", "true", options);
+      res.status(200);
+      res.send("made an account");
+    }
   );
 }
 

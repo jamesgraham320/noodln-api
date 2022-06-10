@@ -5,7 +5,7 @@ const con = !isProd ? {
     port: '5432',
     database: 'smalltalks',
     password: 'smalltalk',
-  } : process.env.DATABASE_URL;
+  } : process.env.DATABASE_URL+"?ssl=true";
 const pg = require('knex')({
   client: 'pg',
   connection: con,

@@ -1,12 +1,14 @@
 const { knexSnakeCaseMappers } = require('objection');
-const pg = require('knex')({
-  client: 'pg',
-  connection: {
+const isProd = process.env.NODE_ENV === 'production';
+const con = !isProd ? {
     host: 'localhost',
     port: '5432',
     database: 'smalltalks',
     password: 'smalltalk',
-  },
+  } : process.env.DATABASE_URL;
+const pg = require('knex')({
+  client: 'pg',
+  connection: con,
   ...knexSnakeCaseMappers()
 })
 

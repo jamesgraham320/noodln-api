@@ -1,24 +1,10 @@
 const { knexSnakeCaseMappers } = require('objection');
-const isProd = process.env.NODE_ENV === 'production';
-const con = !isProd ? {
-    host: 'localhost',
-    port: '5432',
-    database: 'smalltalks',
-    password: 'smalltalk',
-} : {
-  connectionString: process.env.DATABASE_URL,
-  ssl: {rejectUnauthorized: false}
-} 
-const pg = require('knex')({
-  client: 'pg',
-  connection: con,
-  ...knexSnakeCaseMappers()
-})
+const db_con = require('../knexfile.js') 
+const pg = require('knex')({ 
+  ...db_con[process.env.NODE_ENV], 
+  ...knexSnakeCaseMappers() })
 
-
-const getChatters = async (req, res) => {
-  const chatters = pg.select('*').from("chatters").then(
-    chatters => res.status(200).json(chatters)
+const getChatters = async (req, res) => { const chatters = pg.select('*').from("chatters").then( chatters => res.status(200).json(chatters)
   );
 }
 const createChatter = async(req, res) => {

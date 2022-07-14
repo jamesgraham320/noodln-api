@@ -14,7 +14,7 @@ const sendWelcome = async function(user){
   return mj.post("send", {'version': 'v3.1'})
     .request(emails.welcomeMessage(user, newTalk.short_url))
     .then((result) => {
-    console.log("welcome email sent status: ", result.Messages[0].status);
+    console.log("welcome email sent status: ", result);
   })
   .catch((err) => {
     console.log('Error while sending email: ', err)

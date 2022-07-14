@@ -10,7 +10,11 @@ function getNewRoom(user) {
       'Authorization': `Bearer ${process.env.SMALLTALK_PRIVATE}`
     },
     body: JSON.stringify(talkObject(roomName)),
-  }).then(res => res.json());
+  }).then(res => res.json()).then(json => {
+    console.log('in getNewRoom promise json: ', json);
+    return json;
+    }
+  );
 
 }
 

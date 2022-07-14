@@ -9,7 +9,7 @@ const mj = new Mailjet({
 const sendWelcome = async function(user){
   console.log('in mailjet-config: ', user);
   let newTalk = await smt.getNewRoom(user);
-  console.log('smalltalk api response: ', newTalk);
+  console.log('smalltalk api response: ', newTalk.short_url);
 
   return mj.post("send", {'version': 'v3.1'})
     .request(emails.welcomeMessage(user, newTalk.short_url))
@@ -17,7 +17,7 @@ const sendWelcome = async function(user){
     console.log("welcome email sent status: ", result.Messages[0].status);
   })
   .catch((err) => {
-    console.log(err.statusCode)
+    console.log('Error while sending email: ', err)
   })
 }
 

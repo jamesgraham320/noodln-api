@@ -1,4 +1,5 @@
 const welcomeMessage = function(user, smalltalkLink) {
+  console.log('in email-bodies SMT link: ', smalltalkLink);
   return {
   "Messages":[
     {

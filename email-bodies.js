@@ -130,7 +130,7 @@ const welcomeHtml = (fullName, newLink) => `<!DOCTYPE html>
 														<tr>
 															<td style="padding-bottom:15px;padding-left:10px;padding-right:10px;padding-top:10px;">
 																<div style="color:#000000;direction:ltr;font-family:Arial, Helvetica Neue, Helvetica, sans-serif;font-size:16px;font-weight:400;letter-spacing:0px;line-height:120%;text-align:left;mso-line-height-alt:19.2px;">
-																	<p style="margin: 0; margin-bottom: 16px;">Welcome, ${fullName}&nbsp;</p>
+                                  <p style="margin: 0; margin-bottom: 16px;">${fullName}'s 24/7 Noodln Spot &nbsp;</p>
 																	<p style="margin: 0; margin-bottom: 16px;">Noodln is a fun, casual way to connect with your new lunch buddy, powered by the breezy magic of <a href="https://www.atsmalltalk.com/" target="_blank" title="Smalltalk Homepage" style="text-decoration: underline; color: #0068a5;" rel="noopener">Smalltalk</a>. Every day at noon you'll be matched with a new buddy and the two of you can meet and chat in your own private Smalltalk room. What you talk about is totally up to you! Ask about their day, their hobbies, their job or even just what they're eating. Once you're in the room together, the rest is up to you. I hope you find a new best bud! Who knows? It might even be me!</p>
 																	<p style="margin: 0;">To give you a head start I've gone ahead and made you a unique Smalltalk room open 24/7. Share it with your friends, family, coworkers or anybody you want to talk to! Hit the <strong>S</strong><strong>ubscribe</strong> button to get notified when people join your room so you never miss a beat:</p>
 																</div>

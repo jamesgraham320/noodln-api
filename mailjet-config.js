@@ -7,7 +7,9 @@ const mj = new Mailjet({
 })
 
 const sendWelcome = async function(user){
+  console.log('in mailjet-config: ', user);
   let newTalk = await smt.getNewRoom(user);
+  console.log('smalltalk api response: ', newTalk);
 
   return mj.post("send", {'version': 'v3.1'})
     .request(emails.welcomeMessage(user, newTalk.short_url))

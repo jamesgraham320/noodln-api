@@ -13,7 +13,7 @@ module.exports = {
     port: '5432',
     database: 'smalltalks',
     password: 'smalltalk',
-    }  
+    }
   },
 
   production: {

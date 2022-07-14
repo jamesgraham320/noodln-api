@@ -11,8 +11,8 @@ function getNewRoom(user) {
     },
     body: JSON.stringify(talkObject(roomName)),
   }).then(res => res.json()).then(json => {
-    console.log('in getNewRoom promise json: ', json);
-    return json;
+    //console.log('in getNewRoom promise json: ', json);
+    return json.talk;
     }
   );
 

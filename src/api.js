@@ -5,7 +5,7 @@ const pg = require('knex')({
   ...db_con[process.env.NODE_ENV], 
   ...knexSnakeCaseMappers() });
 
-const getChatters = async (req, res) => { 
+const getChatters = (req, res) => { 
   const chatters = pg.select('*')
     .from("chatters")
     .then( chatters => res.status(200).json(chatters)

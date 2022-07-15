@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 
 function getNewRoom(user) {
-  const roomName = `24/7 Noodln with ${user.fullName}!'`
+  const roomName = `${user.fullName}'s 24/7 Noodln Spot!`
   return fetch(process.env.SMALLTALK_CREATE_TALK_EP, {
     method: 'POST',
     headers: {

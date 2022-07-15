@@ -23,7 +23,8 @@ const talkObject = function(name) {
     name: name,
     access: 'anyone',
     mic_behavior: 'start_off',
-    partner_id: process.env.NOODLN_ID
+    partner_id: process.env.NOODLN_ID,
+    theme_id: '836aa177-a620-4d89-a67c-ebf530cb6cfa'
   }
 }
 

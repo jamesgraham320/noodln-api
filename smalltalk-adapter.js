@@ -1,7 +1,6 @@
 const fetch = require('node-fetch');
 
-function getNewRoom(user) {
-  const roomName = `${user.fullName}'s 24/7 Noodln Spot`
+function getNewRoom(roomName) {
   return fetch(process.env.SMALLTALK_CREATE_TALK_EP, {
     method: 'POST',
     headers: {
@@ -10,12 +9,9 @@ function getNewRoom(user) {
       'Authorization': `Bearer ${process.env.SMALLTALK_PRIVATE}`
     },
     body: JSON.stringify(talkObject(roomName)),
-  }).then(res => res.json()).then(json => {
-    //console.log('in getNewRoom promise json: ', json);
-    return json.talk;
-    }
-  );
-
+  })
+  .then(res => res.json())
+  .then(json => json.talk)
 }
 
 const talkObject = function(name) {

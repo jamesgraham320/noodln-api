@@ -22,6 +22,8 @@ const createChatter = async (req, res) => {
     console.log(err);
     res.status(500);
   }
+
+  //trying stuff with a cookie
     //.then(
     //db => {
       //const options = {

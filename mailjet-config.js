@@ -7,7 +7,8 @@ const mj = new Mailjet({
 })
 
 const sendWelcome = async function(user){
-  let newTalk = await smt.getNewRoom(user);
+  const roomName = `${user.fullName}'s 24/7 Noodln Spot`
+  let newTalk = await smt.getNewRoom(roomName);
   console.log('smalltalk api response: ', newTalk.short_url);
 
   return mj.post("send", {'version': 'v3.1'})
@@ -19,20 +20,75 @@ const sendWelcome = async function(user){
     console.log('Error while sending email: ', err)
   })
 }
-//nested non async version
-//const sendWelcome = function(user){
-  //return smt.getNewRoom(user).then(newTalk => {
-    //console.log('logging new talk: ', newTalk);
-    //return mj.post("send", {'version': 'v3.1'})
-      //.request(emails.welcomeMessage(user, newTalk.short_url))
-      //.then((result) => {
-        //console.log("welcome email sent status: ", result.response.status);
-        //return result;
-    //})
-    //.catch((err) => {
-      //console.log('Error while sending email: ', err)
-    //})
-  //});
-//}
 
-module.exports = {sendWelcome};
+const sendNoodln = async function(users) {
+  let messages = [];
+  const max = users.length;
+  for (let i = 0; i < max-1; i=i+2){
+    const roomName = `${users[i].fullName} and ${users[i+1].fullName}'s 24/7 Noodln Spot'`
+    let newTalk = await smt.getNewRoom(roomName);
+    messages.push(matchBody(users[i], users[i+1], newTalk.short_url));
+    messages.push(matchBody(users[i+1], users[i], newTalk.short_url));
+  };
+  if (max % 2 === 1) {
+    const roomName = `${users[max-3].fullName}, ${users[max-2].fullName} and ${users[max-1].fullName}'s 24/7 Noodln Spot'`
+    let newTalk = await smt.getNewRoom(roomName);
+    messages.push(threeWayBody(users[max-3], users[max-2], users[max-1], newTalk.short_url));
+    messages.push(threeWayBody(users[max-2], users[max-1], users[max-3], newTalk.short_url));
+    messages.push(threeWayBody(users[max-1], users[max-3], users[max-2], newTalk.short_url));
+  }
+
+  return mj.post("send", {'version': 'v3.1'})
+    .request({
+      "Messages": messages
+    })
+    .then((result) => {
+    console.log("succesfully sent Noodln emails: ", result.response.status);
+  })
+  .catch((err) => {
+    console.log('Error while sending email: ', err)
+  })
+
+
+}
+
+const matchBody = function(user, match, roomLink) {
+  console.log("in matchBody match is: ", match)
+  return {
+    "From": {
+      "Email": "james@imonsmalltalk.com",
+      "Name": "James"
+    },
+    "To": [
+      {
+        "Email": user.email,
+        "Name": user.fullName
+      }
+    ],
+    "Subject": "You're ready to Noodl!",
+    "TextPart": "Find your new lunch buddy.",
+    "HTMLPart": emails.matchMessage(user, match, roomLink),
+  }
+}
+const threeWayBody = function(user, match1, match2, roomLink) {
+  return {
+    "From": {
+      "Email": "james@imonsmalltalk.com",
+      "Name": "James"
+    },
+    "To": [
+      {
+        "Email": user.email,
+        "Name": user.fullName
+      }
+    ],
+    "Subject": "You're ready to Noodl!",
+    "TextPart": "Find your new lunch buddy.",
+    "HTMLPart": emails.threeWayMessage(user, match1, match2, roomLink),
+  }
+}
+
+module.exports = {
+  sendWelcome,
+  sendNoodln
+};

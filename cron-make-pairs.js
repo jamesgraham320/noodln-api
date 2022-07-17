@@ -1,13 +1,12 @@
 const cron = require('node-cron');
-const api.pg = require('./api');
+const api = require('./src/api');
+const mj = require('./mailjet-config');
 
-cron.schedule('30 11 * * 1-5', function() {
-  const chatters = pg.select('*').from("chatters");
-  chatters.map(c => {console.log(c.id)});
+cron.schedule('56 11 * * *', function() {
+  const chatters = api.pg.select('*').from("chatters");
   const randomized = shuffleArray(chatters.slice(0));
-  randomized.map(c => {console.log(c.id)});
-  let pairs = [];
 
+  mj.sendNoodln(randomized);
 })
 
 function shuffleArray(array) {
@@ -15,4 +14,5 @@ function shuffleArray(array) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
+  return array;
 }

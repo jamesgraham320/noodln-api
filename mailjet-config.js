@@ -9,7 +9,6 @@ const mj = new Mailjet({
 const sendWelcome = async function(user){
   const roomName = `${user.fullName}'s 24/7 Noodln Spot`
   let newTalk = await smt.getNewRoom(roomName);
-  console.log('smalltalk api response: ', newTalk.short_url);
 
   return mj.post("send", {'version': 'v3.1'})
     .request(emails.welcomeMessage(user, newTalk.short_url))
@@ -17,7 +16,7 @@ const sendWelcome = async function(user){
     console.log("welcome email sent status: ", result.response.status);
   })
   .catch((err) => {
-    console.log('Error while sending email: ', err)
+    console.log('Error while sending email: ', err.code)
   })
 }
 
@@ -53,7 +52,6 @@ const sendNoodln = async function(users) {
 }
 
 const matchBody = function(user, match, roomLink) {
-  console.log("in matchBody match is: ", match)
   return {
     "From": {
       "Email": "james@imonsmalltalk.com",

@@ -23,7 +23,7 @@ const sendWelcome = async function(user){
 const sendNoodln = async function(users) {
   let messages = [];
   const max = users.length;
-  for (let i = 0; i < max-1; i=i+2){
+  for (let i = 0; i < max-3; i=i+2){
     const roomName = `${users[i].fullName} and ${users[i+1].fullName}'s 24/7 Noodln Spot'`
     let newTalk = await smt.getNewRoom(roomName);
     messages.push(matchBody(users[i], users[i+1], newTalk.short_url));
@@ -35,6 +35,11 @@ const sendNoodln = async function(users) {
     messages.push(threeWayBody(users[max-3], users[max-2], users[max-1], newTalk.short_url));
     messages.push(threeWayBody(users[max-2], users[max-1], users[max-3], newTalk.short_url));
     messages.push(threeWayBody(users[max-1], users[max-3], users[max-2], newTalk.short_url));
+  } else if (max % 2 === 0) {
+    const roomName = `${users[max-1].fullName} and ${users[max-2].fullName}'s 24/7 Noodln Spot'`
+    let newTalk = await smt.getNewRoom(roomName);
+    messages.push(matchBody(users[max-1], users[max-2], newTalk.short_url));
+    messages.push(matchBody(users[max-2], users[max-1], newTalk.short_url));
   }
 
   return mj.post("send", {'version': 'v3.1'})
@@ -63,7 +68,7 @@ const matchBody = function(user, match, roomLink) {
         "Name": user.fullName
       }
     ],
-    "Subject": "It's time to Noodl!",
+    "Subject": `It's time to Noodl with ${match.fullName}!`,
     "TextPart": "Find your new lunch buddy.",
     "HTMLPart": emails.matchMessage(user, match, roomLink),
   }
@@ -80,7 +85,7 @@ const threeWayBody = function(user, match1, match2, roomLink) {
         "Name": user.fullName
       }
     ],
-    "Subject": "It's time to Noodl!",
+    "Subject": `It's time to Noodl with ${match1.fullName} and ${match2.fullName}!`,
     "TextPart": "Find your new lunch buddy.",
     "HTMLPart": emails.threeWayMessage(user, match1, match2, roomLink),
   }

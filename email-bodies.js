@@ -133,7 +133,7 @@ const threeWayMessage = (user, match1, match2, newLink) => `
 																	<p style="margin: 0; margin-bottom: 16px;">${match1.interest}</p>
 																	<p style="margin: 0; margin-bottom: 16px;"><span style="font-family: inherit; background-color: transparent;">and ${match2.fullName}. They're big on:</span></p>
 																	<p style="margin: 0; margin-bottom: 16px;"><span style="font-family: inherit; background-color: transparent;">${match2.interest}</span></p>
-																	<p style="margin: 0;">Go ahead and join the room below. You can talk for as long or as short as you would like. Whether it's a casual chat, your new bestie, or the sparks of romance, I hope you hit it off! This room is open 24/7 and if you want to invite other people, or even combine Noodls with someone you know, I encourage it!</p>
+                                <p style="margin: 0;">Go ahead and join the room below. You can talk for as long or as short as you would like. Whether it's a casual chat, your new bestie, or the sparks of romance, I hope you hit it off! If your partner is running a little late, I recommend joining now and  hitting the subscribe button in the room, that way you'll be notified as soon as they join. This room is open 24/7 and if you want to invite other people, or even combine Noodls with someone you know, I encourage it!</p>
 																</div>
 															</td>
 														</tr>
@@ -328,7 +328,7 @@ const matchMessage = (user, match, newLink) => `
 																	<p style="margin: 0; margin-bottom: 16px;">Hey, ${user.fullName}!&nbsp;</p>
 																	<p style="margin: 0; margin-bottom: 16px;"><span style="font-family: inherit; background-color: transparent;">Your match today is ${match.fullName}! Their interests include:</span></p>
 																	<p style="margin: 0; margin-bottom: 16px;"><span style="font-family: inherit; background-color: transparent;">${match.interest}</span></p>
-																	<p style="margin: 0;">Go ahead and join the room below. You can talk for as long or as short as you would like. Whether it's a casual chat, your new bestie, or the sparks of romance, I hope you hit it off! This room is open 24/7 and if you want to invite other people, or even combine Noodls with someone you know, I encourage it!</p>
+																	<p style="margin: 0;">Go ahead and join the room below. You can talk for as long or as short as you would like. Whether it's a casual chat, your new bestie, or the sparks of romance, I hope you hit it off! If your partner is running a little late, I recommend joining now and  hitting the subscribe button in the room, that way you'll be notified as soon as they join. This room is open 24/7 and if you want to invite other people, or even combine Noodls with someone you know, I encourage it!</p>
 																</div>
 															</td>
 														</tr>

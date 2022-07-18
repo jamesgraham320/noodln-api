@@ -63,7 +63,7 @@ const matchBody = function(user, match, roomLink) {
         "Name": user.fullName
       }
     ],
-    "Subject": "You're ready to Noodl!",
+    "Subject": "It's time to Noodl!",
     "TextPart": "Find your new lunch buddy.",
     "HTMLPart": emails.matchMessage(user, match, roomLink),
   }
@@ -80,7 +80,7 @@ const threeWayBody = function(user, match1, match2, roomLink) {
         "Name": user.fullName
       }
     ],
-    "Subject": "You're ready to Noodl!",
+    "Subject": "It's time to Noodl!",
     "TextPart": "Find your new lunch buddy.",
     "HTMLPart": emails.threeWayMessage(user, match1, match2, roomLink),
   }

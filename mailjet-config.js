@@ -60,7 +60,7 @@ const matchBody = function(user, match, roomLink) {
   return {
     "From": {
       "Email": "james@imonsmalltalk.com",
-      "Name": "James"
+      "Name": "Noodln @Smalltalk"
     },
     "To": [
       {
@@ -77,7 +77,7 @@ const threeWayBody = function(user, match1, match2, roomLink) {
   return {
     "From": {
       "Email": "james@imonsmalltalk.com",
-      "Name": "James"
+      "Name": "Noodln @Smalltalk"
     },
     "To": [
       {

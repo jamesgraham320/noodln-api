@@ -16,7 +16,6 @@ app.use(cookieParser());
 
 
 // defining endpoints
-app.get('/chatters/', api.getChatters);
 app.post('/chatters/', api.createChatter);
 
 // starting the server

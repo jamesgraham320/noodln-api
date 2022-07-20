@@ -1,6 +1,8 @@
 const { knexSnakeCaseMappers } = require('objection');
+const requestIp = require('request-ip');
 const db_con = require('../knexfile.js') 
 const mj = require('../mailjet-config');
+const fetch = require('node-fetch');
 const pg = require('knex')({ 
   ...db_con[process.env.NODE_ENV], 
   ...knexSnakeCaseMappers() });
@@ -13,6 +15,16 @@ const getChatters = (req, res) => {
 }
 const createChatter = async (req, res) => {
   const chatter = req.body;
+  const clientIp = requestIp.getClientIp(req);
+  const clientInfo = await fetch(`https://ipinfo.io/json?token=${process.env.IPINFO_SECRET}`)
+    .then(res=>res.json());
+  Object.assign(chatter, {
+    last_accessed_ip: clientInfo.ip,
+    city: clientInfo.city,
+    timezone: clientInfo.timezone,
+    }
+  );
+    console.log(chatter)
   try{
     await pg.insert(chatter).into('chatters');
     res.status(200);
@@ -21,6 +33,7 @@ const createChatter = async (req, res) => {
   } catch(err) {
     console.log(err);
     res.status(500);
+    res.send('error inserting chatter');
   }
 
   //trying stuff with a cookie

@@ -60,7 +60,7 @@ const matchBody = function(user, match, roomLink) {
   return {
     "From": {
       "Email": "james@imonsmalltalk.com",
-      "Name": "Noodln @Smalltalk"
+      "Name": "Noodln @ Smalltalk"
     },
     "To": [
       {
@@ -68,7 +68,7 @@ const matchBody = function(user, match, roomLink) {
         "Name": user.fullName
       }
     ],
-    "Subject": `It's time to Noodl with ${match.fullName}!`,
+    "Subject": `${match.fullName} wants to Noodl with you!`,
     "TextPart": "Find your new lunch buddy.",
     "HTMLPart": emails.matchMessage(user, match, roomLink),
   }
@@ -77,7 +77,7 @@ const threeWayBody = function(user, match1, match2, roomLink) {
   return {
     "From": {
       "Email": "james@imonsmalltalk.com",
-      "Name": "Noodln @Smalltalk"
+      "Name": "Noodln @ Smalltalk"
     },
     "To": [
       {
@@ -85,7 +85,7 @@ const threeWayBody = function(user, match1, match2, roomLink) {
         "Name": user.fullName
       }
     ],
-    "Subject": `It's time to Noodl with ${match1.fullName} and ${match2.fullName}!`,
+    "Subject": `${match1.fullName} and ${match2.fullName} want to Noodl with you!`,
     "TextPart": "Find your new lunch buddy.",
     "HTMLPart": emails.threeWayMessage(user, match1, match2, roomLink),
   }

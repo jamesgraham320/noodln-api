@@ -24,22 +24,22 @@ const sendNoodln = async function(users) {
   let messages = [];
   const max = users.length;
   for (let i = 0; i < max-3; i=i+2){
-    //const roomName = `${users[i].fullName} and ${users[i+1].fullName}'s 24/7 Noodln Spot'`
-    //let newTalk = await smt.getNewRoom(roomName);
-    messages.push(matchBody(users[i], users[i+1], 'https://atslt.com/o4P5o5'));
-    messages.push(matchBody(users[i+1], users[i], 'https://atslt.com/o4P5o5'));
+    const roomName = `${users[i].fullName} and ${users[i+1].fullName}'s 24/7 Noodln Spot'`
+    let newTalk = await smt.getNewRoom(roomName);
+    messages.push(matchBody(users[i], users[i+1], newTalk.short_url));
+    messages.push(matchBody(users[i+1], users[i], newTalk.short_url));
   };
   if (max % 2 === 1) {
     const roomName = `${users[max-3].fullName}, ${users[max-2].fullName} and ${users[max-1].fullName}'s 24/7 Noodln Spot'`
-    //let newTalk = await smt.getNewRoom(roomName);
-    messages.push(threeWayBody(users[max-3], users[max-2], users[max-1], 'https://atslt.com/o4P5o5'));
-    messages.push(threeWayBody(users[max-2], users[max-1], users[max-3], 'https://atslt.com/o4P5o5'));
-    messages.push(threeWayBody(users[max-1], users[max-3], users[max-2], 'https://atslt.com/o4P5o5'));
+    let newTalk = await smt.getNewRoom(roomName);
+    messages.push(threeWayBody(users[max-3], users[max-2], users[max-1], newTalk.short_url));
+    messages.push(threeWayBody(users[max-2], users[max-1], users[max-3], newTalk.short_url));
+    messages.push(threeWayBody(users[max-1], users[max-3], users[max-2], newTalk.short_url));
   } else if (max % 2 === 0) {
     const roomName = `${users[max-1].fullName} and ${users[max-2].fullName}'s 24/7 Noodln Spot'`
-    //let newTalk = await smt.getNewRoom(roomName);
-    messages.push(matchBody(users[max-1], users[max-2], 'https://atslt.com/o4P5o5'));
-    messages.push(matchBody(users[max-2], users[max-1], 'https://atslt.com/o4P5o5'));
+    let newTalk = await smt.getNewRoom(roomName);
+    messages.push(matchBody(users[max-1], users[max-2], newTalk.short_url));
+    messages.push(matchBody(users[max-2], users[max-1], newTalk.short_url));
   }
 
   return mj.post("send", {'version': 'v3.1'})

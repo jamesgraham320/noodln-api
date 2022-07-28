@@ -17,6 +17,8 @@ app.use(cookieParser());
 
 // defining endpoints
 app.post('/chatters/', api.createChatter);
+app.post('/organizations/', api.createOrganization);
+app.get('/organizations/:orgId', api.getChattersByOrgId);
 
 // starting the server
 app.listen(process.env.PORT || 3001, () => {

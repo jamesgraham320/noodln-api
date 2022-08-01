@@ -2,11 +2,17 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.up = function (knex) {
+exports.up = async function (knex) {
+  await knex.raw(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`);
+
   return knex.schema.hasTable("organization").then((exists) => {
     if (!exists) {
       return knex.schema.createTable("organization", function (t) {
-        t.increments("id").unsigned().primary();
+        t.uuid("id")
+          .primary()
+          .notNullable()
+          .unique()
+          .defaultTo(knex.raw("uuid_generate_v4()"));
         t.dateTime("created_at")
           .notNullable()
           .defaultTo(knex.raw("CURRENT_TIMESTAMP"));

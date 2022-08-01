@@ -11,7 +11,7 @@ exports.up = function (knex) {
           .notNullable()
           .defaultTo(knex.raw("CURRENT_TIMESTAMP"));
         t.integer("chatter_id").notNullable();
-        t.integer("organization_id").notNullable();
+        t.uuid("organization_id").notNullable();
         t.string("role");
       });
     }

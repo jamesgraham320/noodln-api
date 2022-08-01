@@ -7,6 +7,7 @@ const pg = require("knex")({
   ...db_con[process.env.NODE_ENV],
   ...knexSnakeCaseMappers(),
 });
+const smt = require("../smalltalk-adapter.js");
 
 const getChatters = (req, res) => {
   const chatters = pg
@@ -48,15 +49,20 @@ const createChatter = async (req, res) => {
     res.status(500);
     res.send("error inserting chatter");
   }
+  res.status(200);
+  res.send("account made");
 };
 
-const getChattersByOrgId = async (req, res) => {
-  let orgId = req.params.orgId;
-  let chatters = await pg
+const getChattersByOrgId = async (orgId) => {
+  return await pg
     .select("c.id", "c.full_name", "co.role", "c.interest", "c.email")
     .from("chatter_organization as co")
     .join("chatter as c", "co.chatter_id", "c.id")
     .where({ organization_id: orgId });
+};
+
+const sendChattersByOrgId = (req, res) => {
+  getChattersByOrgId(req.params.orgId);
   res.json(chatters);
   res.status(200);
 };
@@ -87,7 +93,7 @@ const createOrganization = async (req, res) => {
 module.exports = {
   getChatters,
   createChatter,
-  getChattersByOrgId,
+  sendChattersByOrgId,
   pg,
   createOrganization,
 };

@@ -1,22 +1,28 @@
-const welcomeMessage = function(user, newLink) {
+const welcomeMessage = function (user, newLink) {
   return {
-  "Messages":[{
-      "From": {
-        "Email": "james@imonsmalltalk.com",
-        "Name": "James"
+    Messages: [
+      {
+        From: {
+          Email: "james@imonsmalltalk.com",
+          Name: "James",
+        },
+        To: [
+          {
+            Email: user.email,
+            Name: user.fullName,
+          },
+        ],
+        Subject: "You're ready to Noodl!",
+        TextPart: "Find your new lunch buddy.",
+        HTMLPart: welcomeHtml(user.fullName, newLink),
       },
-      "To": [
-        {
-          "Email": user.email,
-          "Name": user.fullName
-        }
-      ],
-      "Subject": "You're ready to Noodl!",
-      "TextPart": "Find your new lunch buddy.",
-      "HTMLPart": welcomeHtml(user.fullName, newLink),
-    }]
-  }
-}
+    ],
+  };
+};
+
+const getSocialLink = (link) => `
+<p style="margin: 0; margin-bottom: 16px;">Check out their socials <a href=${link} target="_blank" rel="noopener noreferrer">here!</a></p>
+`;
 
 const threeWayMessage = (user, match1, match2, newLink) => `
 <!DOCTYPE html>
@@ -131,8 +137,10 @@ const threeWayMessage = (user, match1, match2, newLink) => `
 																	<p style="margin: 0; margin-bottom: 16px;">Today is your lucky day. Instead of one match, you have two! Your Noodln partner are:</p>
 																	<p style="margin: 0; margin-bottom: 16px;">${match1.fullName} who enjoys:&nbsp;</p>
 																	<p style="margin: 0; margin-bottom: 16px;">${match1.interest}</p>
+                                  ${match1.socialLink ? getSocialLink(match1.socialLink) : ""}
 																	<p style="margin: 0; margin-bottom: 16px;"><span style="font-family: inherit; background-color: transparent;">and ${match2.fullName}. They're big on:</span></p>
 																	<p style="margin: 0; margin-bottom: 16px;"><span style="font-family: inherit; background-color: transparent;">${match2.interest}</span></p>
+                                  ${match2.socialLink ? getSocialLink(match2.socialLink) : ""}
                                 <p style="margin: 0;">Go ahead and join the room below. You can talk for as long or as short as you would like. Whether it's a casual chat, your new bestie, or the sparks of romance, I hope you hit it off! If your partner is running a little late, I recommend joining now and  hitting the subscribe button in the room, that way you'll be notified as soon as they join. This room is open 24/7 and if you want to invite other people, or even combine Noodls with someone you know, I encourage it!</p>
 																</div>
 															</td>
@@ -213,8 +221,7 @@ const threeWayMessage = (user, match1, match2, newLink) => `
 </body>
 
 </html>
-`
-
+`;
 
 const matchMessage = (user, match, newLink) => `
 <!DOCTYPE html>
@@ -328,6 +335,7 @@ const matchMessage = (user, match, newLink) => `
 																	<p style="margin: 0; margin-bottom: 16px;">Hey, ${user.fullName}!&nbsp;</p>
 																	<p style="margin: 0; margin-bottom: 16px;"><span style="font-family: inherit; background-color: transparent;">Your match today is ${match.fullName}! Their interests include:</span></p>
 																	<p style="margin: 0; margin-bottom: 16px;"><span style="font-family: inherit; background-color: transparent;">${match.interest}</span></p>
+                                  ${match.socialLink ? getSocialLink(match.socialLink) : ""}
 																	<p style="margin: 0;">Go ahead and join the room below. You can talk for as long or as short as you would like. Whether it's a casual chat, your new bestie, or the sparks of romance, I hope you hit it off! If your partner is running a little late, I recommend joining now and  hitting the subscribe button in the room, that way you'll be notified as soon as they join. This room is open 24/7 and if you want to invite other people, or even combine Noodls with someone you know, I encourage it!</p>
 																</div>
 															</td>
@@ -408,7 +416,7 @@ const matchMessage = (user, match, newLink) => `
 </body>
 
 </html>
-`
+`;
 
 const welcomeHtml = (fullName, newLink) => `<!DOCTYPE html>
 <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
@@ -520,7 +528,7 @@ const welcomeHtml = (fullName, newLink) => `<!DOCTYPE html>
 																<div style="color:#000000;direction:ltr;font-family:Arial, Helvetica Neue, Helvetica, sans-serif;font-size:16px;font-weight:400;letter-spacing:0px;line-height:120%;text-align:left;mso-line-height-alt:19.2px;">
                                   <p style="margin: 0; margin-bottom: 16px;">${fullName}'s 24/7 Noodln Spot &nbsp;</p>
 																	<p style="margin: 0; margin-bottom: 16px;">Noodln is a fun, casual way to connect with your new lunch buddy, powered by the breezy magic of <a href="https://www.atsmalltalk.com/" target="_blank" title="Smalltalk Homepage" style="text-decoration: underline; color: #0068a5;" rel="noopener">Smalltalk</a>. Every day at noon you'll be matched with a new buddy and the two of you can meet and chat in your own private Smalltalk room. What you talk about is totally up to you! Ask about their day, their hobbies, their job or even just what they're eating. Once you're in the room together, the rest is up to you. I hope you find a new best bud! Who knows? It might even be me!</p>
-																	<p style="margin: 0;">To give you a head start I've gone ahead and made you a unique Smalltalk room open 24/7. Share it with your friends, family, coworkers or anybody you want to talk to! Hit the <strong>S</strong><strong>ubscribe</strong> button to get notified when people join your room so you never miss a beat:</p>
+																	<p style="margin: 0;">To give you a head start I've gone ahead and made you a unique Smalltalk room open 24/7. Share it with your friends, family, coworkers or anybody you want to talk to! Hit the <strong>Subscribe</strong> button to get notified when people join your room so you never miss a beat:</p>
 																</div>
 															</td>
 														</tr>
@@ -598,10 +606,10 @@ const welcomeHtml = (fullName, newLink) => `<!DOCTYPE html>
 		</tbody>
 	</table><!-- End -->
 </body>
-`
+`;
 
 module.exports = {
   welcomeMessage,
   matchMessage,
-  threeWayMessage
-}
+  threeWayMessage,
+};

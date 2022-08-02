@@ -36,7 +36,7 @@ const createChatter = async (req, res) => {
 
   try {
     let chatterId = await pg.insert(chatter, ["id"]).into("chatter");
-    pg.insert({
+    await pg.insert({
       chatter_id: chatterId[0].id,
       organization_id: orgId[0].id,
       role: "general_noodlr",
@@ -49,8 +49,6 @@ const createChatter = async (req, res) => {
     res.status(500);
     res.send("error inserting chatter");
   }
-  res.status(200);
-  res.send("account made");
 };
 
 const getChattersByOrgId = async (orgId) => {

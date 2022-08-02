@@ -1,6 +1,6 @@
 const fetch = require("node-fetch");
 
-function getNewRoom(roomName) {
+function getNewRoom(roomName, description) {
   return fetch(process.env.SMALLTALK_CREATE_TALK_EP, {
     method: "POST",
     headers: {
@@ -8,7 +8,7 @@ function getNewRoom(roomName) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${process.env.SMALLTALK_PRIVATE}`,
     },
-    body: JSON.stringify(talkObject(roomName)),
+    body: JSON.stringify(talkObject(roomName, description)),
   })
     .then((res) => {
       console.log(res.body.error);
@@ -17,7 +17,7 @@ function getNewRoom(roomName) {
     .then((json) => json.talk);
 }
 
-const talkObject = function (name) {
+const talkObject = function (name, description) {
   return {
     name: name,
     access: "anyone",
@@ -26,6 +26,7 @@ const talkObject = function (name) {
     theme_id: "836aa177-a620-4d89-a67c-ebf530cb6cfa",
     subscriptions_allowed: true,
     cta_ids: ["dae36c71-1ca9-430c-8292-921c32a1c2c3"],
+    description: description
   };
 };
 

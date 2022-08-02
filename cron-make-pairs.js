@@ -1,9 +1,6 @@
-const cron = require('node-cron');
 const api = require('./src/api');
 const mj = require('./mailjet-config');
 
-//cron.schedule('56 11 * * *', function() {
-//})
 async function dailyJob() {
   const chatters = await api.pg.select('*').from("chatter");
   const randomized = shuffleArray(chatters.slice(0));

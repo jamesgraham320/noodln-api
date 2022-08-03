@@ -9,20 +9,10 @@ const pg = require("knex")({
 });
 const smt = require("../smalltalk-adapter.js");
 
-const getChatters = (req, res) => {
-  const chatters = pg
-    .select("*")
-    .from("chatter")
-    .then((chatters) => res.status(200).json(chatters));
-};
-
 const createChatter = async (req, res) => {
-  const chatter = req.body;
+  const chatter = req.body.chatter;
+  const organizationId = req.body.organizationId;
   const clientIp = requestIp.getClientIp(req);
-
-  const orgId = await pg("organization")
-    .select("id")
-    .where({ name: "general Noodls" });
 
   const clientInfo = await fetch(
     `https://ipinfo.io/json?token=${process.env.IPINFO_SECRET}`
@@ -36,16 +26,17 @@ const createChatter = async (req, res) => {
 
   try {
     let chatterId = await pg.insert(chatter, ["id"]).into("chatter");
-    await pg.insert({
-      chatter_id: chatterId[0].id,
-      organization_id: orgId[0].id,
-      role: "general_noodlr",
-    }).into("chatter_organization");
+    await pg
+      .insert({
+        chatter_id: chatterId[0].id,
+        organization_id: organizationId,
+        role: "general_noodlr",
+      })
+      .into("chatter_organization");
     res.status(200);
     res.send("account made");
-    mj.sendWelcome(chatter);
+    //mj.sendWelcome(chatter);
   } catch (err) {
-    console.log(err);
     res.status(500);
     res.send("error inserting chatter");
   }
@@ -67,31 +58,45 @@ const sendChattersByOrgId = (req, res) => {
 
 const createOrganization = async (req, res) => {
   const orgData = req.body.organization;
-  const chatterData = req.body.chatters.map((c) => {
-    return { full_name: c["Name"], email: c["Email"], interest: orgData.name };
-  });
+  let data;
   try {
-    let org_id = await pg("organization").insert(orgData, ["id"]);
-    let chatterIds = await pg("chatter").insert(chatterData, ["id"]);
-    let co = chatterIds.map((c) => {
-      return {
-        chatter_id: c.id,
-        organization_id: org_id[0].id,
-      };
-    });
-    console.log(co);
-    await pg("chatter_organization").insert(co);
-    res.status(200);
-    res.send("org made");
+    [data] = await pg("organization")
+      .insert(orgData)
+      .returning(["name", "id"]);
   } catch (err) {
-    console.log("error while inserting organization", err);
+    res
+      .status(400)
+      .json({ data: null, error: { message: "invalid organization" } });
+  }
+  data.signupUrl = "https://noodln.com/signup/" + data.id
+  res.status(200).json({ data: data || null, error: null });
+};
+
+const getOrganization = async (req, res) => {
+  let { orgId } = req.params;
+  let data, error;
+  try {
+    [data] = await pg("organization").select("id", "name").where({ id: orgId });
+  } catch (err) {
+    return res
+      .status(400)
+      .send({ data: null, error: { message: "invalid organization" } });
+  }
+  if (data) {
+    return res
+      .status(200)
+      .json({ data: data || null, error: error ? error.message : null });
+  } else {
+    return res
+      .status(401)
+      .send({ data: null, error: { message: "organization not found" } });
   }
 };
 
 module.exports = {
-  getChatters,
   createChatter,
   sendChattersByOrgId,
   pg,
   createOrganization,
+  getOrganization,
 };

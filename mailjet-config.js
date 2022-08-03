@@ -78,6 +78,7 @@ const sendNoodln = async function (users) {
     messages.push(matchBody(users[max - 2], users[max - 1], newTalk.short_url));
   }
 
+  return;
   return mj
     .post("send", { version: "v3.1" })
     .request({

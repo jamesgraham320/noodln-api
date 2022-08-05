@@ -13,7 +13,7 @@ const sendWelcome = async function (user) {
 
   return mj
     .post("send", { version: "v3.1" })
-    .request(emails.welcomeMessage(user, newTalk.short_url), {}, false)
+    .request(emails.welcomeMessage(user, newTalk.short_url))
     .then((result) => {
       console.log("welcome email sent status: ", result.response.status);
     })

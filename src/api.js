@@ -35,7 +35,7 @@ const createChatter = async (req, res) => {
       .into("chatter_organization");
     res.status(200);
     res.send("account made");
-    //mj.sendWelcome(chatter);
+    mj.sendWelcome(chatter);
   } catch (err) {
     res.status(500);
     res.send("error inserting chatter");
@@ -60,15 +60,13 @@ const createOrganization = async (req, res) => {
   const orgData = req.body.organization;
   let data;
   try {
-    [data] = await pg("organization")
-      .insert(orgData)
-      .returning(["name", "id"]);
+    [data] = await pg("organization").insert(orgData).returning(["name", "id"]);
   } catch (err) {
     res
       .status(400)
       .json({ data: null, error: { message: "invalid organization" } });
   }
-  data.signupUrl = "https://noodln.com/signup/" + data.id
+  data.signupUrl = "https://noodln.com/signup/" + data.id;
   res.status(200).json({ data: data || null, error: null });
 };
 

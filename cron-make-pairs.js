@@ -8,7 +8,7 @@ async function dailyJob() {
       .select("c.id", "c.full_name", "co.role", "c.interest", "c.email")
       .from("chatter_organization as co")
       .join("chatter as c", "co.chatter_id", "c.id")
-      .where({ organization_id: org.id });
+      .where({ organization_id: org });
     if (chatters.length > 2) {
       const randomized = shuffleArray(chatters.slice(0));
       mj.sendNoodln(randomized);
@@ -25,4 +25,3 @@ function shuffleArray(array) {
   }
   return array;
 }
-

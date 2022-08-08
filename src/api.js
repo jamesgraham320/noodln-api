@@ -25,7 +25,8 @@ const createChatter = async (req, res) => {
   });
 
   try {
-    let chatterId = await pg.insert(chatter, ["id"]).into("chatter");
+    let chatterId = await pg("chatter").insert(chatter, ["id"]).onConflict("email").merge();
+    console.log(chatterId);
     await pg
       .insert({
         chatter_id: chatterId[0].id,

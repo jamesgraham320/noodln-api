@@ -78,7 +78,6 @@ const sendNoodln = async function (users) {
     messages.push(matchBody(users[max - 2], users[max - 1], newTalk.short_url));
   }
 
-  return;
   return mj
     .post("send", { version: "v3.1" })
     .request({
@@ -97,9 +96,15 @@ function roomDescription(user1, user2, user3) {
   if (user1?.socialLink || user2?.socialLink || user3?.socialLink) {
     roomDesc = "Check out eachother's socials: ";
   }
-  user1?.socialLink ? (roomDesc += `\n${user1.fullName}: ${user1.socialLink}`) : "";
-  user2?.socialLink ? (roomDesc += `\n${user2.fullName}: ${user2.socialLink}`) : "";
-  user3?.socialLink ? (roomDesc += `\n${user3.fullName}: ${user3.socialLink}`) : "";
+  user1?.socialLink
+    ? (roomDesc += `\n${user1.fullName}: ${user1.socialLink}`)
+    : "";
+  user2?.socialLink
+    ? (roomDesc += `\n${user2.fullName}: ${user2.socialLink}`)
+    : "";
+  user3?.socialLink
+    ? (roomDesc += `\n${user3.fullName}: ${user3.socialLink}`)
+    : "";
   return roomDesc;
 }
 

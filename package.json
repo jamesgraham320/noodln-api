@@ -22,6 +22,7 @@
     "helmet": "^5.1.0",
     "knex": "^2.1.0",
     "morgan": "^1.10.0",
+    "nanoid": "^4.0.0",
     "node-cron": "^3.0.1",
     "node-fetch": "^2.6.7",
     "node-mailjet": "^5.0.1",

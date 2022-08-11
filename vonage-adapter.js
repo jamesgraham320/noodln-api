@@ -6,6 +6,6 @@ const vonage = new Vonage({
 });
 
 function sendWelcomeText() {
-  vonage.message.sendSms(from )
+  vonage.message.sendSms()
 }
 

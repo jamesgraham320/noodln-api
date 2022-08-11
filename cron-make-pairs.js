@@ -1,4 +1,4 @@
-const pg = require("./src/db/client.js")
+const pg = require("./src/db/client.js").pg;
 const mj = require("./mailjet-config");
 
 async function dailyJob() {
@@ -9,7 +9,7 @@ async function dailyJob() {
       .from("chatter_organization as co")
       .join("chatter as c", "co.chatter_id", "c.id")
       .where({ organization_id: org.id });
-    
+
     if (chatters.length > 2) {
       const randomized = shuffleArray(chatters.slice(0));
       mj.sendNoodln(randomized);

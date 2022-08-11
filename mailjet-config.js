@@ -13,9 +13,20 @@ const sendWelcome = async function (user) {
 
   return mj
     .post("send", { version: "v3.1" })
-    .request(emails.welcomeMessage(user, newTalk.short_url))
+    .request(emails.welcomeBody(user, newTalk.short_url))
     .then((result) => {
       console.log("welcome email sent status: ", result.response.status);
+    })
+    .catch((err) => {
+      console.log("Error while sending email: ", err.code);
+    });
+};
+
+const sendOrgWelcome = async function (org) {
+  mj.post("send", { version: "v3.1" })
+    .request(emails.orgWelcomeBody(org))
+    .then((result) => {
+      console.log("welcome org email sent status: ", result.response.status);
     })
     .catch((err) => {
       console.log("Error while sending email: ", err.code);
@@ -31,8 +42,8 @@ const sendNoodln = async function (users) {
     }'s 24/7 Noodln Spot'`;
     const roomDesc = roomDescription(users[i], users[i + 1]);
     let newTalk = await smt.getNewRoom(roomName, roomDesc);
-    messages.push(matchBody(users[i], users[i + 1], newTalk.short_url));
-    messages.push(matchBody(users[i + 1], users[i], newTalk.short_url));
+    messages.push(emails.matchBody(users[i], users[i + 1], newTalk.short_url));
+    messages.push(emails.matchBody(users[i + 1], users[i], newTalk.short_url));
   }
   if (max % 2 === 1) {
     const roomName = `${users[max - 3].fullName}, ${
@@ -74,8 +85,12 @@ const sendNoodln = async function (users) {
       users[max - 2].fullName
     }'s 24/7 Noodln Spot'`;
     let newTalk = await smt.getNewRoom(roomName);
-    messages.push(matchBody(users[max - 1], users[max - 2], newTalk.short_url));
-    messages.push(matchBody(users[max - 2], users[max - 1], newTalk.short_url));
+    messages.push(
+      emails.matchBody(users[max - 1], users[max - 2], newTalk.short_url)
+    );
+    messages.push(
+      emails.matchBody(users[max - 2], users[max - 1], newTalk.short_url)
+    );
   }
 
   return mj
@@ -108,42 +123,8 @@ function roomDescription(user1, user2, user3) {
   return roomDesc;
 }
 
-const matchBody = function (user, match, roomLink) {
-  return {
-    From: {
-      Email: "james@imonsmalltalk.com",
-      Name: "Noodln @ Smalltalk",
-    },
-    To: [
-      {
-        Email: user.email,
-        Name: user.fullName,
-      },
-    ],
-    Subject: `${match.fullName} wants to Noodl with you!`,
-    TextPart: "Find your new lunch buddy.",
-    HTMLPart: emails.matchMessage(user, match, roomLink),
-  };
-};
-const threeWayBody = function (user, match1, match2, roomLink) {
-  return {
-    From: {
-      Email: "james@imonsmalltalk.com",
-      Name: "Noodln @ Smalltalk",
-    },
-    To: [
-      {
-        Email: user.email,
-        Name: user.fullName,
-      },
-    ],
-    Subject: `${match1.fullName} and ${match2.fullName} want to Noodl with you!`,
-    TextPart: "Find your new lunch buddy.",
-    HTMLPart: emails.threeWayMessage(user, match1, match2, roomLink),
-  };
-};
-
 module.exports = {
   sendWelcome,
   sendNoodln,
+  sendOrgWelcome,
 };

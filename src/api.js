@@ -54,12 +54,13 @@ const getOrganization = async (req, res) => {
   }
 };
 const createOrganization = async (req, res) => {
-  const {organization} = req.body;
+  const { organization } = req.body;
   let { data, error } = await org.create(organization);
   if (error) {
     res.status(400).json({ data: data || null, error: error.message || null });
   } else {
-    res.status(200).json({ data: data || null, error:  null });
+    mj.sendOrgWelcome(data);
+    res.status(200).json({ data: data || null, error: null });
   }
 };
 

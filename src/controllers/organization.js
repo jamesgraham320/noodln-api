@@ -3,7 +3,9 @@ const pg = require("../db/client.js").pg;
 const create = async (orgData) => {
   let o;
   try {
-    [o] = await pg("organization").insert(orgData).returning(["name", "id"]);
+    [o] = await pg("organization")
+      .insert(orgData)
+      .returning(["name", "id", "contact_name", "contact_email"]);
   } catch (err) {
     return { error: { message: "failed to create organization" } };
   }

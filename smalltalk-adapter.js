@@ -26,7 +26,7 @@ const talkObject = function (name, description) {
     theme_id: "836aa177-a620-4d89-a67c-ebf530cb6cfa",
     subscriptions_allowed: true,
     cta_ids: ["dae36c71-1ca9-430c-8292-921c32a1c2c3"],
-    description: description
+    description: description,
   };
 };
 

@@ -36,6 +36,7 @@ const getByOrgId = async (orgId) => {
   }
 };
 
+
 module.exports = {
   create,
   getByOrgId,

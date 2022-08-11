@@ -1,10 +1,10 @@
-const api = require("./src/api");
+const pg = require("./src/db/client.js")
 const mj = require("./mailjet-config");
 
 async function dailyJob() {
-  const orgs = await api.pg("organization").select("id");
+  const orgs = await pg("organization").select("id");
   orgs.forEach(async (org) => {
-    const chatters = await api.pg
+    const chatters = await pg
       .select("c.id", "c.full_name", "co.role", "c.interest", "c.email")
       .from("chatter_organization as co")
       .join("chatter as c", "co.chatter_id", "c.id")

@@ -12,6 +12,8 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan("combined"));
 
+const txt = require("../vonage-adapter");
+
 // defining endpoints
 app.post("/chatters/", api.createChatter);
 app.post("/organizations/", api.createOrganization);

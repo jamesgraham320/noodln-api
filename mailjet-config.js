@@ -56,7 +56,7 @@ const sendNoodln = async function (users) {
     );
     let newTalk = await smt.getNewRoom(roomName);
     messages.push(
-      threeWayBody(
+      emails.threeWayBody(
         users[max - 3],
         users[max - 2],
         users[max - 1],
@@ -64,7 +64,7 @@ const sendNoodln = async function (users) {
       )
     );
     messages.push(
-      threeWayBody(
+      emails.threeWayBody(
         users[max - 2],
         users[max - 1],
         users[max - 3],
@@ -72,7 +72,7 @@ const sendNoodln = async function (users) {
       )
     );
     messages.push(
-      threeWayBody(
+      emails.threeWayBody(
         users[max - 1],
         users[max - 3],
         users[max - 2],
